@@ -1,0 +1,85 @@
+public class BeamStructure extends HorizontalBeam{
+  private ConnectionPoint leftPoint,rightPoint,middlePoint;
+  private int units;
+  
+  
+  
+  public BeamStructure(float x, float y){
+    super(x,y,PublicObjectConstants.beamDefaultLength,PublicObjectConstants.beamDefaultWidth);
+    units = 1;
+    leftPoint = new ConnectionPoint(x-w/2,y,false);
+    rightPoint = new ConnectionPoint(x+w/2,y,false);
+    middlePoint = new ConnectionPoint(x,y,true);
+  }
+  
+  @Override
+  public void drawObj(){
+    super.drawObj();
+    leftPoint.drawObj();
+    rightPoint.drawObj();
+    middlePoint.drawObj();
+  }
+  
+  private void changeWidth(int units){
+    this.units = units;
+  }
+  
+  private void setWidth(){
+    this.w = units * PublicObjectConstants.beamDefaultWidth;
+  }
+  
+  public void run(){
+    snapInteraction(
+      connectionInteraction()
+    );
+    w = calculatedWidth();
+    x = leftPoint.x + w/2;
+    drawObj();
+  }
+  
+  
+  
+  public void snapInteraction(boolean connectionInteraction){
+    float currentW = calculatedWidth();
+    float remainder = currentW % 50;
+    if(remainder != 0 && !connectionInteraction){
+      
+      currentW = currentW - remainder;
+
+      if(remainder > PublicObjectConstants.beamUnits / 2){
+        currentW += PublicObjectConstants.beamUnits;
+      }
+
+      
+    }
+    
+    rightPoint.x = leftPoint.x + currentW;
+  }
+  
+  public void previousSetting(){
+    
+  }
+  
+  public boolean connectionInteraction(){
+    return connectionMouseInteraction(leftPoint,rightPoint);
+  }
+  
+  public boolean connectionMouseInteraction(ConnectionPoint point1, ConnectionPoint point2){
+    if(point1.interaction()){
+      point1.moveX(mouseX);
+      return true;
+      
+    }
+    else if(point2.interaction()){
+      point2.moveX(mouseX);
+      return true;
+    }
+    return false;
+
+  }
+  
+  public float calculatedWidth(){
+    return rightPoint.x - leftPoint.x;
+  }
+  
+}
