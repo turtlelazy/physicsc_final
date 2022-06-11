@@ -4,11 +4,20 @@ public class ConnectionPoint{
   public float x,y;
 
   private ConnectionPoint connection;
-
-  public ConnectionPoint(float x, float y, boolean positive){
+  private Mass connectedMass;
+  private Mouse mouseInstance;
+  
+  public ConnectionPoint(float x, float y, boolean positive, Mouse mouseInstance){
     this.x = x;
     this.y = y;
     this.positive = positive;
+    this.mouseInstance = mouseInstance;
+  }
+  
+  public void connect(Mass mass){
+    this.connectedMass = mass;
+    connection = mass.connectionPoint();
+    connect(connection);
   }
   
   public boolean connect(ConnectionPoint connection){
@@ -30,6 +39,10 @@ public class ConnectionPoint{
   }
   
   public boolean interaction(){
+    return interactionBasic() && mouseInstance.cursorMode == MouseMode.CURSOR;
+  }
+  
+  public boolean interactionBasic(){
     boolean mouseOn = dist(this.x,this.y,mouseX,mouseY) < range;
     return mouseOn && mousePressed;
   }
@@ -65,7 +78,15 @@ public class ConnectionPoint{
     circle(x,y,range*0.5);
     
     maintainConnection();
+    spawn();
+    if(connectedMass != null) connectedMass.run();
     
+  }
+  
+  public void spawn(){
+    if(interactionBasic() && !positive && connection == null){
+      mouseInstance.spawn(this);
+    }
   }
     
 

@@ -2,13 +2,13 @@ public class Penguin implements Mass{
   
   public float x,y;
   private ConnectionPoint point;
-  public PImage bluePenguin;
+  public PImage bluePenguin = loadImage("bluepeng.png");
 
-  public Penguin(float x, float y){
+  public Penguin(float x, float y,Mouse mouseInstance){
     this.x = x;
     this.y = y;
     
-    point = new ConnectionPoint(x,y,true);
+    point = new ConnectionPoint(x,y,true,mouseInstance);
   }
   
   public void drawPeng(){
@@ -31,5 +31,9 @@ public class Penguin implements Mass{
   public int mass(){
     return 0;
   }
+  public ConnectionPoint connectionPoint(){
+    return point;
+  }
+  
   
 }

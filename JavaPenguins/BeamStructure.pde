@@ -6,12 +6,12 @@ public class BeamStructure extends HorizontalBeam implements Mass{
   private Point lastaccessed = Point.NONE;
 
 
-  public BeamStructure(float x, float y){
+  public BeamStructure(float x, float y, Mouse mouseInstance){
     super(x,y,PublicObjectConstants.beamDefaultLength,PublicObjectConstants.beamDefaultWidth);
     units = 1;
-    leftPoint = new ConnectionPoint(x-w/2,y+PublicObjectConstants.barHeight,false);
-    rightPoint = new ConnectionPoint(x+w/2,y+PublicObjectConstants.barHeight,false);
-    middlePoint = new ConnectionPoint(x,y,true);
+    leftPoint = new ConnectionPoint(x-w/2,y+PublicObjectConstants.barHeight,false,mouseInstance);
+    rightPoint = new ConnectionPoint(x+w/2,y+PublicObjectConstants.barHeight,false,mouseInstance);
+    middlePoint = new ConnectionPoint(x,y,true,mouseInstance);
   }
   
   @Override
@@ -21,6 +21,10 @@ public class BeamStructure extends HorizontalBeam implements Mass{
     rightPoint.drawObj();
     middlePoint.drawObj();
     
+  }
+  
+  public ConnectionPoint connectionPoint(){
+    return middlePoint;
   }
   
   private void changeWidth(int units){
@@ -121,6 +125,10 @@ public class BeamStructure extends HorizontalBeam implements Mass{
   
   public int mass(){
     return 0;
+  }
+  
+  public void rotate(double angle){
+    
   }
   
 }
