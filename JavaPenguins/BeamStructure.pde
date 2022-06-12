@@ -16,10 +16,11 @@ public class BeamStructure extends HorizontalBeam implements Mass{
   
   @Override
   public void drawObj(){
-    super.drawObj();
-    leftPoint.drawObj();
-    rightPoint.drawObj();
+    super.drawBar(this.x,this.y,this.l,this.w,middlePoint.x,middlePoint.y);
+    leftPoint.drawObj(middlePoint.x,middlePoint.y, middlePoint.angle);
+    rightPoint.drawObj(middlePoint.x,middlePoint.y,middlePoint.angle);
     middlePoint.drawObj();
+
     
   }
   

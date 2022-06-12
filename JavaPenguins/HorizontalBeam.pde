@@ -22,6 +22,16 @@ public class HorizontalBeam{
     rect(x,y,w,l);
   }
   
+  public void drawBar(float x, float y, float l,float w, float abovex, float abovey){
+    pushMatrix();
+    translate(x-abovex,0);
+    fill(255,255,255);
+    rectMode(CENTER);
+    rect(0,0,w,l);
+    
+    popMatrix();
+  }
+  
   public void drawObj(){
     drawBar(x,y,l,w);
   }

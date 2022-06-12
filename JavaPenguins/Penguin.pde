@@ -14,6 +14,12 @@ public class Penguin implements Mass{
   public void drawPeng(){
     float defaultWidth = 100;
     
+    image(bluePenguin,-defaultWidth/2,-5,defaultWidth,defaultWidth);
+  }
+  
+  public void drawPeng(float abovex, float abovey){
+    float defaultWidth = 100;
+    
     image(bluePenguin,x-defaultWidth/2,y-5,defaultWidth,defaultWidth);
   }
   
