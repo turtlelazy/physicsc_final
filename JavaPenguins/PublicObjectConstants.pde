@@ -7,5 +7,7 @@ public static class PublicObjectConstants{
   
   public static float barHeight = 35;
   
+  public static float g = 1.1;
+  
 
 }

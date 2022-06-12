@@ -2,11 +2,16 @@ public class ConnectionPoint{
   private boolean positive = false;
   private float range = 20;
   public float x,y;
+  
   public float angle = 0;
+  public float omega = 0;
+  
   private ConnectionPoint connection;
   private Mass connectedMass;
   private Mouse mouseInstance;
   public boolean hide = false;
+  
+  public boolean motion = false;
   
   public ConnectionPoint(float x, float y, boolean positive, Mouse mouseInstance){
     this.x = x;
@@ -111,8 +116,24 @@ public class ConnectionPoint{
       rectMode(CENTER);
       rect(0,0 - PublicObjectConstants.barHeight / 2,PublicObjectConstants.beamDefaultLength,PublicObjectConstants.barHeight);
       fill(0,0,255);
-      angle = aboveAng / -2; THIS WAS FOR TestING
-      rotate(-aboveAng + angle);
+      
+      if(motion){
+        if(connectedMass != null){
+          omega += connectedMass.netRotate(angle);
+          angle -= omega * 1/frameRate;
+          connectedMass.motion(this.motion);
+        }
+        rotate(-aboveAng + angle);
+      }
+      
+      else{
+        if(connectedMass != null){
+          connectedMass.motion(this.motion);
+        }
+
+        angle = 0;
+        omega = 0;
+      }
 
     }
     else{
@@ -130,6 +151,11 @@ public class ConnectionPoint{
     popMatrix(); //CLOSING MATRIX
 
     
+  }
+  
+  public float mass(){
+    if(connectedMass != null) return connectedMass.mass();
+    return 0;
   }
   
   public void spawn(){

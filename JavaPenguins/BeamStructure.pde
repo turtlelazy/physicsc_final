@@ -2,9 +2,8 @@
 public class BeamStructure extends HorizontalBeam implements Mass{
   public ConnectionPoint leftPoint,rightPoint,middlePoint;
   private int units;
-  
+  boolean motion = false;
   private Point lastaccessed = Point.NONE;
-
 
   public BeamStructure(float x, float y, Mouse mouseInstance){
     super(x,y,PublicObjectConstants.beamDefaultLength,PublicObjectConstants.beamDefaultWidth);
@@ -16,12 +15,12 @@ public class BeamStructure extends HorizontalBeam implements Mass{
   
   @Override
   public void drawObj(){
+    leftPoint.motion = this.motion;
+    rightPoint.motion = this.motion;
     super.drawBar(this.x,this.y,this.l,this.w,middlePoint.x,middlePoint.y);
     leftPoint.drawObj(middlePoint.x,middlePoint.y, middlePoint.angle);
     rightPoint.drawObj(middlePoint.x,middlePoint.y,middlePoint.angle);
     middlePoint.drawObj();
-
-    
   }
   
   public ConnectionPoint connectionPoint(){
@@ -124,12 +123,29 @@ public class BeamStructure extends HorizontalBeam implements Mass{
 
   }
   
-  public int mass(){
-    return 0;
+  public float mass(){
+    return leftPoint.mass() + rightPoint.mass();
   }
   
-  public void rotate(double angle){
+  public float netRotate(float angle){
+    float g = PublicObjectConstants.g;
+    float pixelsPerMeter = 1000;
+    //float leftMidDist = dist(leftPoint.x,middlePoint.x,leftPoint.y,middlePoint.y) / pixelsPerMeter;
+    //float rightMidDist = dist(rightPoint.x,middlePoint.x,rightPoint.y,middlePoint.y) / pixelsPerMeter;
+    float leftMidDist = abs(leftPoint.x-middlePoint.x) / pixelsPerMeter;
+    float rightMidDist = abs(rightPoint.x-middlePoint.x) / pixelsPerMeter;
     
+    float netTorque = g * sin(PI/2-angle) * (leftPoint.mass() * leftMidDist - rightPoint.mass() * rightMidDist);
+    float inertia = leftPoint.mass() * pow(leftMidDist,2) + rightPoint.mass() * pow(rightMidDist,2);
+    if(inertia == 0) return 0;
+    float rotateAngle = netTorque / inertia * (1/ frameRate);    
+    return rotateAngle;
+    
+    
+  }
+  
+  public void motion(boolean motion){
+    this.motion = motion;
   }
   
 }
