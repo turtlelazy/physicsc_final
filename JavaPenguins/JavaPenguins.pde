@@ -80,9 +80,13 @@ public void draw(){
   //beam.run();
   if(test){
       point.motion = true;
+      playScene.active = true;
+      
   }
   else{
       point.motion = false;
+      playScene.active = false;
+
 
   }
    
@@ -94,7 +98,7 @@ public void draw(){
   pengChoose1.draw();
   pengChoose2.draw();
   resetScene.draw();
-  playScene.draw();
+  playScene.independentDraw();
 
   mouseInstance.draw();
   //System.out.println(beam.netRotate(point.angle));
@@ -120,7 +124,7 @@ public void mouseReleased(){
     test = !test;
   }
   if(hideInstructions.touched()){
-    hideInstructions.active = !hideInstructions.active;
+    hideInstructions.active = true;
   }
 
 }

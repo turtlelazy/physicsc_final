@@ -40,12 +40,13 @@ public class HitZone{
         rectMode(CORNER);
         rect(x,y,l,w);
     }
-
     
-    if(icon != null){
+     if(icon != null){
       image(icon,x,y,l,w);
     }
+
     
+
   }
   
   public void independentDraw(){
@@ -54,6 +55,11 @@ public class HitZone{
         rectMode(CORNER);
         rect(x,y,l,w);
     }
+    
+    if(icon != null){
+      image(icon,x,y,l,w);
+    }
+    
   
   }
   
