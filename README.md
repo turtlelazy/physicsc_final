@@ -16,3 +16,7 @@ Our project idea was inspired by the penguin problem done in class. We hoped to 
 ## Physics
 In this system, there exists no friction nor air resistance. The beams are thin, long rods with no Inertia of their own (thus, the inertia is equal to the masses times the distance squared). The Euler step method is utilized each frame in order to reach the next estimated angle, with a framerate of 30 frames per second (so thirty steps per second). One flaw of this simulation is that it does not account for centripetal acceleration within the system.
 
+Because these seesaws are similar to pendulums, the two biggest factors affecting the period are the length of the bar and the gravity. As such, "gravity" and "length" in terms of pixels were tuned for user visibility.
+
+## Reflection
+Spinny penguins go brrrr. Penguins are cool. Something that may have been nice to add with a tiny bit more time might have been incorporating friction, and seeing the model slowly move to a standstill. Incorporating centripetal acceleration into the model seems tough, but could definitely have been possible if more time was spent on the math.
